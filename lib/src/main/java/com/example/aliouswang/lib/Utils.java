@@ -27,4 +27,11 @@ public class Utils {
         }
     }
 
+    static <T> T checkNotNull(T value, String message) {
+        if (value == null) {
+            throw new NullPointerException(message);
+        }
+        return value;
+    }
+
 }

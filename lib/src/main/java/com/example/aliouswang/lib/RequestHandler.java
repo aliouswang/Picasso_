@@ -4,8 +4,9 @@ import android.graphics.Bitmap;
 
 import java.io.IOException;
 
-import javax.xml.transform.Source;
+import okio.Source;
 
+import static com.example.aliouswang.lib.Utils.checkNotNull;
 /**
  * Created by aliouswang on 2017/9/21.
  */
@@ -17,6 +18,14 @@ public abstract class RequestHandler {
         private final Bitmap bitmap;
         private final Source source;
         private final int exifOrientation;
+
+        public Result(Bitmap bitmap, Picasso_.LoadedFrom loadedFrom) {
+            this(checkNotNull(bitmap, "bitmap == null"), null, loadedFrom, 0);
+        }
+
+        public Result(Source source, Picasso_.LoadedFrom loadedFrom) {
+            this(null, checkNotNull(source, "source == null"), loadedFrom, 0);
+        }
 
         public Result(Bitmap bitmap,
                       Source source,
