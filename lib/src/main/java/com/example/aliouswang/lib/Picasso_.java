@@ -49,12 +49,12 @@ public class Picasso_ {
 
     private final Listener listener;
     private final RequestTransformer requestTransformer;
-    private final List<RequestHandler> requestHandlers;
+//    private final List<RequestHandler> requestHandlers;
 
     final Context context;
     final Dispatcher dispatcher;
     final Cache cache;
-    final Stats stats;
+//    final Stats stats;
 
     final Bitmap.Config defaultBitmapConfig;
 
