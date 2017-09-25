@@ -12,4 +12,6 @@ public interface ICache {
 
     Bitmap get(String key);
 
+    boolean isExist(String key);
+
 }
