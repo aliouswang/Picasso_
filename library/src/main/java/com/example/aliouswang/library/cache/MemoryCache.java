@@ -12,12 +12,19 @@ public class MemoryCache implements ICache{
     private LruCache<String, Bitmap> bitmapLruCache;
 
     public MemoryCache() {
-        bitmapLruCache = new LruCache<>(1024 * 1024);
+        final int maxSize = (int) (Runtime.getRuntime().maxMemory() / 1024);
+        final int cacheSize = maxSize / 8;
+        bitmapLruCache = new LruCache<String, Bitmap>(cacheSize) {
+            @Override
+            protected int sizeOf(String key, Bitmap value) {
+                return value.getByteCount() / 1024;
+            }
+        };
     }
 
     @Override
     public void put(String key, Bitmap bitmap) {
-        if (bitmap == null) return;
+        if (bitmap == null || isExist(key)) return;
         bitmapLruCache.put(key, bitmap);
     }
 
