@@ -40,7 +40,7 @@ public class MD5Util {
             }
 
             //返回经过加密后的字符串
-            return new String(str);
+            return new String(str).toLowerCase();
 
         } catch (Exception e) {
             e.printStackTrace();

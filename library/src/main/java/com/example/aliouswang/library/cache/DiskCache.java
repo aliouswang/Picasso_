@@ -4,12 +4,16 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
+import com.example.aliouswang.library.util.MD5Util;
 import com.example.aliouswang.library.util.Utils;
 import com.jakewharton.disklrucache.DiskLruCache;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * Created by aliouswang on 2017/9/22.
@@ -45,16 +49,41 @@ public class DiskCache implements ICache{
     @Override
     public void put(String key, Bitmap bitmap) {
         if (bitmap == null) return;
-
+        String md5Key = MD5Util.md5(key);
+        try {
+            DiskLruCache.Editor editor = mDiskLruCache.edit(md5Key);
+            OutputStream outputStream = editor.newOutputStream(0);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+            editor.commit();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public Bitmap get(String key) {
+        String md5Key = MD5Util.md5(key);
+        try {
+            DiskLruCache.Snapshot snapshot = mDiskLruCache.get(md5Key);
+            if (snapshot != null) {
+                InputStream inputStream = snapshot.getInputStream(0);
+                return BitmapFactory.decodeStream(inputStream);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
     @Override
     public boolean isExist(String key) {
+        String md5Key = MD5Util.md5(key);
+        try {
+            DiskLruCache.Snapshot snapshot = mDiskLruCache.get(md5Key);
+            return snapshot != null;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
