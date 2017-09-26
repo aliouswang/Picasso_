@@ -1,8 +1,6 @@
 package com.example.aliouswang.library;
 
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.PriorityBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -11,11 +9,14 @@ import java.util.concurrent.TimeUnit;
 
 public class Worker {
 
-    public ExecutorService executorService;
+    public PausableThreadPoolExecutor executorService;
 
     public Worker() {
 //        executorService = Executors.newFixedThreadPool(3);
-        executorService = new ThreadPoolExecutor(5, 5, 1, TimeUnit.MILLISECONDS,
+//        executorService = new ThreadPoolExecutor(5, 5, 1, TimeUnit.MILLISECONDS,
+//                new PriorityBlockingQueue<Runnable>());
+
+        executorService = new PausableThreadPoolExecutor(5, 5, 1, TimeUnit.MILLISECONDS,
                 new PriorityBlockingQueue<Runnable>());
     }
 
@@ -23,4 +24,12 @@ public class Worker {
         executorService.execute(action);
     }
 
+
+    public void pause() {
+        executorService.pause();
+    }
+
+    public void resume() {
+        executorService.resume();
+    }
 }

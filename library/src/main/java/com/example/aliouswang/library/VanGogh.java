@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.widget.ImageView;
 
 /**
  * Created by aliouswang on 2017/9/22.
@@ -13,6 +12,10 @@ import android.widget.ImageView;
 public class VanGogh {
 
     private static Worker sWorker = new Worker();
+
+    public static Worker getWorker() {
+        return sWorker;
+    }
 
     private static Handler mainHandler = new Handler(Looper.myLooper()) {
         @Override

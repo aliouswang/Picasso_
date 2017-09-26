@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
+import com.example.aliouswang.library.VanGogh;
 import com.example.aliouswang.library.cache.CacheManager;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,6 +27,25 @@ public class MainActivity extends AppCompatActivity {
 
         ImageAdapter imageAdapter = new ImageAdapter();
         recyclerView.setAdapter(imageAdapter);
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    Log.e("pool_tag", "SCROLL_STATE_IDLE");
+                    VanGogh.getWorker().resume();
+                }else {
+                    Log.e("pool_tag", "other state");
+                    VanGogh.getWorker().pause();
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
 
 //        final OkHttp3Downloader okHttp3Downloader = new OkHttp3Downloader();
 //        new AsyncTask<Void, Void, Bitmap>() {
