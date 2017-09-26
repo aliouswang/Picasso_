@@ -63,7 +63,7 @@ public class PausableThreadPoolExecutor extends ThreadPoolExecutor{
             condition.signalAll();
 
         } finally {
-            lock.lock();
+            lock.unlock();
 
             Log.e("pool_tag", "resume success " + "; is paused : " + isPaused);
         }
