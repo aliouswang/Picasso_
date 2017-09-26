@@ -15,7 +15,7 @@ public class Worker {
 
     public Worker() {
 //        executorService = Executors.newFixedThreadPool(3);
-        executorService = new ThreadPoolExecutor(3, 3, 1, TimeUnit.MILLISECONDS,
+        executorService = new ThreadPoolExecutor(5, 5, 1, TimeUnit.MILLISECONDS,
                 new PriorityBlockingQueue<Runnable>());
     }
 
