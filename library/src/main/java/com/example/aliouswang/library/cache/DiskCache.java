@@ -21,7 +21,7 @@ import java.io.OutputStream;
 
 public class DiskCache implements ICache{
 
-    private static final int DISK_CACHE_SIZE = 1024 * 1024 * 10;  //10MB
+    private static final int DISK_CACHE_SIZE = 1024 * 1024 * 100;  //10MB
     String mCacheDirPath;
     private DiskLruCache mDiskLruCache;
 

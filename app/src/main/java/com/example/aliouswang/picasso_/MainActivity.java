@@ -1,14 +1,11 @@
 package com.example.aliouswang.picasso_;
 
-import android.graphics.Bitmap;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ImageView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
-import com.example.aliouswang.library.VanGogh;
 import com.example.aliouswang.library.cache.CacheManager;
-import com.example.aliouswang.library.util.OkHttp3Downloader;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,11 +20,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        cacheManager = CacheManager.getInstance(this);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        final ImageView imageView = (ImageView) findViewById(R.id.imageView);
-
-        VanGogh.with(this).load(IMAGE_URL).into(imageView);
+        ImageAdapter imageAdapter = new ImageAdapter();
+        recyclerView.setAdapter(imageAdapter);
 
 //        final OkHttp3Downloader okHttp3Downloader = new OkHttp3Downloader();
 //        new AsyncTask<Void, Void, Bitmap>() {
